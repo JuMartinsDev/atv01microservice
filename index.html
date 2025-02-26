@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ache seu Gato!</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FEFAE0;
+            font-family: 'Roboto', sans-serif;
+            padding-top: 70px;
+            color: #333;
+            margin: 0;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #626F47;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header {
+            position: fixed;
+            background-color: #626F47;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: #FFCF50;
+        }
+
+        .info {
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        #main {
+            margin-top: 120px;
+            margin: 30px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .conteudo {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .texto {
+            flex: 1;
+            max-width: 45%;
+        }
+
+        .imagem {
+            flex: 1;
+            max-width: 45%;
+        }
+
+        .imagem img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .imagem img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .carrossel {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .gato {
+            flex: 0 0 auto;
+            width: 250px;
+            text-align: center;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gato:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .gato img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gato img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .gato h3 {
+            font-size: 18px;
+            color: #626F47;
+            margin-top: 10px;
+        }
+
+        .gato p {
+            font-size: 14px;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #FFCF50;
+            color: #333;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #626F47;
+            color: white;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #itemInput {
+            padding: 10px;
+            font-size: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 50%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        #itemInput::placeholder {
+            color: #7a7a7a;
+            font-style: italic;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #apiMessage {
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #626F47;
+        }
+
+        /* Estilo para o formulário de contato */
+        .form-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container input,
+        .form-container button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container input {
+            border: 2px solid #ccc;
+        }
+
+        .form-container button {
+            background-color: #FFCF50;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #626F47;
+            color: white;
+        }
+
+        /* Estilo para a tabela de contatos - ex:08 */
+        #contactsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        #contactsTable th,
+        #contactsTable td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        #contactsTable th {
+            background-color: #626F47;
+            color: white;
+        }
+
+        #contactsTable td {
+            background-color: #f9f9f9;
+        }
+
+        #contactsTable tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#sobre-nos">Sobre Nós</a></li>
+                <li><a href="#nossos-gatos">Nossos Gatos</a></li>
+                <li><a href="#adote">Adote</a></li>
+                <li><a href="#nome">Disponibilidade</a></li>
+                <li><a href="#cadastro">Cadastre-se</a></li>
+                <li><a href="#listar">Listar Cadastros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="main">
+        <div class="info" id="sobre-nos">
+            <h2 class="section-title">Quem Somos?</h2>
+            <div class="conteudo">
+                <div class="texto">
+                    <p class="section-text">Somos uma clínica dedicada à reabilitação de gatos, com foco no cuidado e
+                        recuperação de felinos que necessitam de atendimento especializado. Nosso objetivo é
+                        proporcionar um lar seguro e saudável para esses animais até que encontrem uma família amorosa.
+                    </p>
+                    <button id="changeColorBtn">Mudar Cor</button>
+                </div>
+                <div class="imagem">
+                    <img src="https://www.petz.com.br/blog/wp-content/uploads/2019/07/vida-de-gato.jpg"
+                        alt="Imagem de um gato">
+                </div>
+            </div>
+        </div>
+
+        <div class="info" id="nossos-gatos">
+            <h2 class="section-title">Conheça Seu Futuro Pet!</h2>
+            <div class="carrossel">
+                <div class="gato">
+                    <img src="https://portalvet.royalcanin.com.br/media/wp-content/uploads/2024/10/racas-gatos-mais-comuns-siames.jpg"
+                        alt="Gato 1">
+                    <h3>Ameixa</h3>
+                    <p>Ele é muito brincalhão e adora se esconder.</p>
+                </div>
+                <div class="gato">
+                    <img src="https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2020/10/08/shutterstock94815547-1.jpg"
+                        alt="Gato 2">
+                    <h3>Floquinho</h3>
+                    <p>O Floquinho é um pouco mais tímido, mas adora receber carinho.</p>
+                </div>
+                <div class="gato">
+                    <img src="https://www.petz.com.br/blog/wp-content/uploads/2019/07/vida-de-gato.jpg" alt="Gato 3">
+                    <h3>Litrado</h3>
+                    <p>Litrado adora explorar novos ambientes e é cheio de energia!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info" id="adote">
+            <div class="conteudo">
+                <div class="texto">
+                    <h2>A Importância de Adotar</h2>
+                    <p>Adotar é um ato de amor e responsabilidade. Ao adotar um gato, você não só está oferecendo uma
+                        nova chance para um animal, mas também contribui para o controle da população de animais
+                        abandonados. Adote, salve vidas e tenha uma companhia fiel e amorosa!</p>
+                </div>
+                <div class="imagem">
+                    <img src="https://adoteumgatinho.org.br/img/importancia-castracao-mini.jpg"
+                        alt="Imagem sobre adoção">
+                </div>
+            </div>
+        </div>
+
+        <div class="info" id="nome">
+            <h2>Adote você também!</h2>
+            <p>Entre em contato conosco para mais informações sobre sua futura fofura</p>
+
+            <input type="text" id="itemInput" placeholder="Digite seu nome aqui">
+            <input type="number" id="ageInput" placeholder="Digite sua idade">
+            <button id="addItemBtn">Adicionar Item</button>
+
+            <ul id="contactList">
+                <!-- Itens serão adicionados aqui -->
+            </ul>
+        </div>
+
+        <!-- Div para mostrar a mensagem da API -->
+        <div id="apiMessage">Carregando mensagem...</div>
+
+        <!-- Novo formulário de contato -->
+        <div class="form-container" id="cadastro">
+            <h2>Fale Conosco</h2>
+            <form id="contactForm">
+                <input type="text" id="name" placeholder="Digite seu nome" required><br>
+                <input type="email" id="email" placeholder="Digite seu e-mail" required><br>
+                <input type="number" id="age" placeholder="Digite sua idade" required><br>
+                <button type="submit">Enviar</button>
+            </form>
+            <div id="responseMessage"></div>
+            <div id="nameError" style="color: red;"></div>
+            <div id="emailError" style="color: red;"></div>
+            <div id="ageError" style="color: red;"></div>
+        </div>
+
+        <div class="info" id="listar">
+            <div>
+                <input type="text" id="filterInput" placeholder="Filtrar por nome...">
+                <button id="resetFilterBtn">Resetar Filtro</button>
+
+                <button id="filterAgeBtn">Filtrar Maiores de 18</button>
+            </div>
+
+            <table id="contactsTable">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Idade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- As linhas de dados serão inseridas dinamicamente aqui -->
+                </tbody>
+            </table>
+        </div>
+
+
+    </section>
+
+    <footer>
+        Todos os direitos reservados a Adote um Gato
+    </footer>
+
+    <script>
+        let fullData = []; // Armazenará os dados da tabela
+
+        //Muda cor de fundo - ex:02
+        document.getElementById('changeColorBtn').addEventListener('click', function () {
+            document.body.style.backgroundColor = document.body.style.backgroundColor === 'rgb(153, 101, 53)' ? 'white' : 'rgb(153, 101, 53)';
+        });
+
+        //altera elementos DOM - ex:03
+        document.getElementById('addItemBtn').onclick = function () {
+            var inputValue = document.getElementById('itemInput').value;
+            var ageValue = document.getElementById('ageInput').value;
+            if (inputValue && ageValue) {
+                var newItem = document.createElement('li');
+                newItem.textContent = inputValue + " - Idade: " + ageValue;
+                newItem.onclick = function () {
+                    newItem.remove();
+                };
+                document.getElementById('contactList').appendChild(newItem);
+                document.getElementById('itemInput').value = '';
+                document.getElementById('ageInput').value = '';
+            } else {
+                alert("Por favor, digite um contato válido e a idade.");
+            }
+        };
+
+        //remove itens adicionados - ex:03
+        document.getElementById('contactList').addEventListener('dblclick', function (e) {
+            if (e.target && e.target.nodeName === 'LI') {
+                e.target.remove();
+            }
+        });
+
+        // Função para consumir a API - ex:04
+        function consumirApi() {
+            fetch("http://demo6283136.mockable.io/exemplogatos")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('apiMessage').textContent = data.mensagem;
+                })
+                .catch(error => {
+                    console.log("Erro ao consumir a API:", error);
+                    document.getElementById('apiMessage').textContent = "Erro ao carregar a mensagem!";
+                });
+        }
+
+        //ex: 05 e verificação (ex:09)
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            //Limpa mensagens de erro anteriores
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('ageError').textContent = '';
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+
+            let isValid = true;
+
+            // Verificação do nome
+            if (!name) {
+                document.getElementById('nameError').textContent = 'O nome é obrigatório!';
+                isValid = false;
+            }
+
+            // Verificação do email
+            if (!email) {
+                document.getElementById('emailError').textContent = 'O e-mail é obrigatório!';
+                isValid = false;
+            }
+
+            // Verificação da idade
+            if (!age) {
+                document.getElementById('ageError').textContent = 'A idade é obrigatória!';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Se tudo estiver válido, envia os dados
+                const data = { name: name, email: email, age: parseInt(age) };
+
+                // Adiciona os dados à tabela
+                adicionarDadosATabela(name, email, age);
+
+                // Envia dados para a API
+                fetch('http://demo8272325.mockable.io/exemplogatospost', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('responseMessage').textContent = 'Mensagem enviada com sucesso: ' + data.mensagem;
+                    })
+                    .catch(error => {
+                        document.getElementById('responseMessage').textContent = 'Erro ao enviar mensagem!';
+                    });
+            }
+        });
+
+        // Carregar dados da API e exibir na tabela - Popula a tabela - entre ex:05 e 06
+        function consumirApiPost() {
+            fetch("http://demo8272325.mockable.io/exemplogatos06")
+                .then(response => response.json())
+                .then(data => {
+                    fullData = data;
+                    mostrarDadosNaTabela(data);
+                })
+                .catch(error => {
+                    console.log("Erro ao consumir a API:", error);
+                });
+        }
+
+        // Função para adicionar dados à tabela - ex:06
+        function adicionarDadosATabela(nome, email, idade) {
+            const tbody = document.getElementById('contactsTable').getElementsByTagName('tbody')[0];
+
+            const row = document.createElement('tr');
+
+            const cellName = document.createElement('td');
+            cellName.textContent = nome;
+            row.appendChild(cellName);
+
+            const cellEmail = document.createElement('td');
+            cellEmail.textContent = email;
+            row.appendChild(cellEmail);
+
+            const cellAge = document.createElement('td');
+            cellAge.textContent = idade;
+            row.appendChild(cellAge);
+
+            const cellActions = document.createElement('td');
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Editar';
+            editBtn.onclick = () => editarNome(nome, row);
+            cellActions.appendChild(editBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Excluir';
+            deleteBtn.onclick = () => excluirItem(nome, row);
+            cellActions.appendChild(deleteBtn);
+
+            row.appendChild(cellActions);
+
+            tbody.appendChild(row);
+
+            // Adiciona o dado à lista fullData
+            fullData.push({ nome, email, idade });
+        }
+
+
+        // Função para filtrar dados por idade maior que 18 - ex:07
+        document.getElementById('filterAgeBtn').addEventListener('click', function () {
+            const filteredData = fullData.filter(item => item.idade > 18);
+            mostrarDadosNaTabela(filteredData);
+        });
+
+        // Função para resetar o filtro - ex:07
+        document.getElementById('resetFilterBtn').addEventListener('click', function () {
+            mostrarDadosNaTabela(fullData);
+        });
+
+        // Função para mostrar dados na tabela e crud - ex:08
+        function mostrarDadosNaTabela(data) {
+            const tbody = document.getElementById('contactsTable').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Limpar tabela antes de mostrar novos dados
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                const cellName = document.createElement('td');
+                cellName.textContent = item.nome;
+                row.appendChild(cellName);
+
+                const cellEmail = document.createElement('td');
+                cellEmail.textContent = item.email;
+                row.appendChild(cellEmail);
+
+                const cellAge = document.createElement('td');
+                cellAge.textContent = item.idade;
+                row.appendChild(cellAge);
+
+                const cellActions = document.createElement('td');
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Editar';
+                editBtn.onclick = () => editarNome(item, row);
+                cellActions.appendChild(editBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Excluir';
+                deleteBtn.onclick = () => excluirItem(item, row);
+                cellActions.appendChild(deleteBtn);
+
+                row.appendChild(cellActions);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        // Função para editar nome - ex:08
+        function editarNome(item, row) {
+            const novoNome = prompt("Digite o novo nome:", item);
+            if (novoNome) {
+                item = novoNome;
+                row.cells[0].textContent = novoNome;
+            }
+        }
+
+        // Função para excluir item - ex:08
+        function excluirItem(item, row) {
+            const confirmar = confirm(`Tem certeza que deseja excluir ${item}?`);
+            if (confirmar) {
+                row.remove();
+            }
+        }
+
+        // Validação (ex:09), listagem dividida em listar dados da tabela e cadastro (ex:10) feita junto com os exercícios anteriores
+
+        // Inicializa os dados ao carregar a página
+        window.onload = consumirApiPost;
+
+    </script>
+
+</body>
+
+</html>
