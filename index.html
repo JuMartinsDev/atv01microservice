@@ -453,61 +453,62 @@
 
         //ex: 05 e verificação (ex:09)
         document.getElementById('contactForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            //Limpa mensagens de erro anteriores
-            document.getElementById('nameError').textContent = '';
-            document.getElementById('emailError').textContent = '';
-            document.getElementById('ageError').textContent = '';
+    // Limpa mensagens de erro anteriores
+    document.getElementById('nameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('ageError').textContent = '';
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const age = document.getElementById('age').value;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const age = document.getElementById('age').value;
 
-            let isValid = true;
+    let isValid = true;
 
-            // Verificação do nome
-            if (!name) {
-                document.getElementById('nameError').textContent = 'O nome é obrigatório!';
-                isValid = false;
-            }
+    // Verificação do nome
+    if (!name) {
+        document.getElementById('nameError').textContent = 'O nome é obrigatório!';
+        isValid = false;
+    }
 
-            // Verificação do email
-            if (!email) {
-                document.getElementById('emailError').textContent = 'O e-mail é obrigatório!';
-                isValid = false;
-            }
+    // Verificação do email
+    if (!email) {
+        document.getElementById('emailError').textContent = 'O e-mail é obrigatório!';
+        isValid = false;
+    }
 
-            // Verificação da idade
-            if (!age) {
-                document.getElementById('ageError').textContent = 'A idade é obrigatória!';
-                isValid = false;
-            }
+    // Verificação da idade
+    if (!age) {
+        document.getElementById('ageError').textContent = 'A idade é obrigatória!';
+        isValid = false;
+    }
 
-            if (isValid) {
-                // Se tudo estiver válido, envia os dados
-                const data = { name: name, email: email, age: parseInt(age) };
+    if (isValid) {
+        // Se tudo estiver válido, envia os dados
+        const data = { name: name, email: email, age: parseInt(age) };
 
-                // Adiciona os dados à tabela
-                adicionarDadosATabela(name, email, age);
+        // Adiciona os dados à tabela
+        adicionarDadosATabela(name, email, age);
 
-                // Envia dados para a API
-                fetch(http://demo6283136.mockable.io/exemplopost', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('responseMessage').textContent = 'Mensagem enviada com sucesso: ' + data.mensagem;
-                    })
-                    .catch(error => {
-                        document.getElementById('responseMessage').textContent = 'Erro ao enviar mensagem!';
-                    });
-            }
-        });
+        // Envia dados para a API
+        fetch("http://demo6283136.mockable.io/exemplopost", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('responseMessage').textContent = 'Mensagem enviada com sucesso: ' + data.mensagem;
+            })
+            .catch(error => {
+                document.getElementById('responseMessage').textContent = 'Erro ao enviar mensagem!';
+            });
+    }
+});
+
 
         // Carregar dados da API e exibir na tabela - Popula a tabela - entre ex:05 e 06
         function consumirApiPost() {
